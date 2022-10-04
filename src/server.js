@@ -94,7 +94,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer);
 
 io.on('connection', async socket => {
-    console.log('Un cliente se ha conectado.');
+    logger.logInfo('Un cliente se ha conectado.');
 
     const messages = await messageContainer.getAll();
     normalizeMessages(messages);
@@ -117,8 +117,8 @@ io.on('connection', async socket => {
 
 export const serverListen = (PORT) => {
     const server = httpServer.listen(PORT, async () => {
-        console.log(`Servidor fork escuchando en el puerto ${server.address().port}`);
+        logger.logInfo(`Servidor fork escuchando en el puerto ${server.address().port}`);
     })
-    server.on('error', error => console.log(`Error en servidor ${error}`));
+    server.on('error', error => logger.logInfo(`Error en servidor ${error}`));
     return server;
 }
