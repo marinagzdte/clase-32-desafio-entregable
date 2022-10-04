@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import os from 'os';
+import logger from '../utils/logger.js';
 
 const infoRouter = new Router();
 
 infoRouter.get('/info', (req, res) => {
+    logger.info(`Ruta ${req.path} metodo ${req.method}`);
+
     const info = {
         os: process.platform,
         nodeVersion: process.version,
