@@ -7,7 +7,6 @@ class Logger {
         this.logger = log4js.getLogger();
 
         this.logReqInfo = (req, res, next) => {
-            console.log(this.logger)
             this.logger.info(`Ruta ${req.path} metodo ${req.method}`);
             next();
         }
