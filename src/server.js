@@ -14,6 +14,7 @@ import registerRouter from './routes/registerRouter.js';
 import loginRouter from './routes/loginRouter.js';
 import infoRouter from './routes/infoRouter.js';
 import randomNumberRouter from './routes/randomNumberRouter.js';
+import compression from 'compression';
 
 /*-----------------------------------------------*/
 /*                  instances                    */
@@ -50,9 +51,10 @@ app.engine('hbs', engine({
 app.set('view engine', 'hbs');
 app.set('views', "./public/views");
 
+app.use(compression())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//app.use(express.static('./public'));
+app.use(express.static('./public'));
 
 app.use(registerRouter)
 app.use(loginRouter)
