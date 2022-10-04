@@ -1,24 +1,27 @@
 import log4js from 'log4js';
+import config from '../config.js';
 
-const logConfig = {
-    appenders: {
-        info: { type: "console" },
-        errFile: { type: "file", filename: "error.log" },
-        warnFile: { type: "file", filename: "warn.log" },
+class Logger {
+    constructor() {
+        log4js.configure(config.log4js);
+        this.logger = log4js.getLogger();
 
-        log: { type: 'logLevelFilter', appender: 'info', level: 'all' },
-        errLog: { type: 'logLevelFilter', appender: 'errFile', level: 'error' },
-        warnLog: { type: 'logLevelFilter', appender: 'warnFile', level: 'warn' },
-    },
-    categories: {
-        default: {
-            appenders: ['log', 'errLog', 'warnLog'],
-            level: 'all'
+        this.logReqInfo = (req, res, next) => {
+            console.log(this.logger)
+            this.logger.info(`Ruta ${req.path} metodo ${req.method}`);
+            next();
+        }
+
+        this.logReqWarn = (req, res, next) => {
+            this.logger.warn(`Ruta ${req.path} metodo ${req.method} no implementados`);
+            next();
+        }
+
+        this.logError = (error) => {
+            this.logger.error(`Error: ${error.message}`)
         }
     }
 }
 
-log4js.configure(logConfig);
-const logger = log4js.getLogger();
-
-export default logger;
+const logger = new Logger();
+export default logger
