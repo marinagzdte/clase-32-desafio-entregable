@@ -15,6 +15,7 @@ import loginRouter from './routes/loginRouter.js';
 import infoRouter from './routes/infoRouter.js';
 import randomNumberRouter from './routes/randomNumberRouter.js';
 import compression from 'compression';
+import logger from './utils/logger.js';
 
 /*-----------------------------------------------*/
 /*                  instances                    */
@@ -76,10 +77,14 @@ app.get('/', checkAuth, (req, res) => {
     res.render('main', { name: req.user.name, username: req.user.username });
 });
 
-app.get('/api/test-productos', (req, res) => {
+app.get('/api/test-productos', logger.logReqInfo, (req, res) => {
     const randomProducts = getFiveRandomProducts();
     res.render('test', { randomProducts: randomProducts });
 });
+
+app.all('*', logger.logReqWarn, (req, res) => {
+    res.send('Ruta y metodo no implementados.')
+})
 
 /*-----------------------------------------------*/
 /*               socket setup                    */
