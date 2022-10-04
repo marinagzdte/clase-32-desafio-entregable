@@ -1,4 +1,5 @@
 import knex from 'knex';
+import logger from '../utils/logger.js';
 
 class DbContainer {
     constructor(config, tableName) {
@@ -10,7 +11,7 @@ class DbContainer {
         return this.dbClient.from(this.tableName).select()
             .then(rows => { return rows; })
             .catch((err) => {
-                console.log(err);
+                logger.logError(err)
                 throw err;
             });
     }
@@ -19,34 +20,34 @@ class DbContainer {
         this.dbClient.from(this.tableName).select().where('id', '=', id)
             .then((allItems) => { return allItems; })
             .catch((err) => {
-                console.log(err);
+                logger.logError(err)
                 throw err;
             });
     }
 
     async add(item) {
         this.dbClient(this.tableName).insert(item)
-            .then(() => { console.log('Data insertada'); })
+            .then(() => { logger.logInfo('Data insertada'); })
             .catch((err) => {
-                console.log(err);
+                logger.logError(err)
                 throw err;
             });
     }
 
     modifyItemById(id, newData) {
         this.dbClient.from(this.tableName).where('id', '=', id).update(newData)
-            .then(() => { console.log('Registro actualizado'); })
+            .then(() => { logger.logInfo('Registro actualizado'); })
             .catch((err) => {
-                console.log(err);
+                logger.logError(err)
                 throw err;
             });
     }
 
     deleteItemById(id) {
         this.dbClient.from(this.tableName).where('id', '=', id).del()
-            .then(() => { console.log('Registro borrado'); })
+            .then(() => { logger.logInfo('Registro borrado'); })
             .catch((err) => {
-                console.log(err);
+                logger.logError(err)
                 throw err;
             });
     }
