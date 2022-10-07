@@ -2,10 +2,15 @@
   "type": "module",
   "scripts": {
     "cluster": "node ./index.js --mode=cluster",
-    "fork": "node ./index.js --mode=fork "
+    "fork": "node ./index.js --mode=fork ",
+    "prof": "node --prof ./index.js --mode=fork",
+    "test": "node benchmark.js",
+    "start": "0x index.js",
+    "inspect": "node --inspect ./index.js --mode=fork"
   },
   "dependencies": {
     "@types/node": "^18.7.21",
+    "autocannon": "^7.10.0",
     "bcrypt": "^5.0.1",
     "cluster": "^0.7.7",
     "compression": "^1.7.4",
