@@ -21,3 +21,5 @@ process.on('message', msg => {
     console.log(`worker #${process.pid} finalizó su trabajo`)
     process.exit()
 })
+
+export default generateRandomNumbers;
